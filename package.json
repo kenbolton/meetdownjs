@@ -1,5 +1,5 @@
 {
-    "name": "application-name"
+    "name": "meetdownjs"
   , "version": "0.1.0"
   , "private": true
   , "dependencies": {
