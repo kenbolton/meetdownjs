@@ -8,7 +8,13 @@ exports.index = function(req, res){
 };
 
 exports.user = {
-    index: function (req, res) {
-        res.send("Hello, you!");
-    }
+  index: function (req, res) {
+    req.app.settings.db.collection('users', function(error, users) {
+      if (!error) {
+        users.find().toArray(function(error, found) {
+          res.render('user', found[0]);
+        });
+      }
+    });
+  }
 };
