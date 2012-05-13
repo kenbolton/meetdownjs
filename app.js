@@ -5,6 +5,8 @@
 
 var express = require('express')
   , mongo = require('mongodb')
+  , hbs = require('hbs')
+  , moment = require('moment')
   , routes = require('./routes');
 
 var app = module.exports = express.createServer();
@@ -32,6 +34,10 @@ app.configure(function() {
   var db = new mongo.Db('test', new mongo.Server('localhost', 27017, {}), {});
   db.open(function() {});
   app.set('db', db);
+});
+
+hbs.registerHelper('date', function (format, date) {
+  return date ? moment(date).format(format) : '';
 });
 
 // Routes
