@@ -1,8 +1,3 @@
-
-/*
- * GET home page.
- */
-
 exports.index = function(req, res){
   req.app.settings.db.collection('events', function(error, events) {
     if (!error) {
@@ -10,13 +5,13 @@ exports.index = function(req, res){
         .find({ starts_at: { $gt: new Date() }})
         .sort({ starts_at: 1 })
         .toArray(function(error, found) {
-            var next = found.shift();
-            res.render('index', {
-              title: 'Meetdown.js',
-              next: next,
-              upcoming: found
-            });
+          var next = found.shift();
+          res.render('index', {
+            title: 'Meetdown.js',
+            next: next,
+            upcoming: found
           });
+        });
     }
   });
 };
@@ -32,8 +27,8 @@ exports.users = {
     } else if (!format) {
       callback = function (error, found) {
         res.render('users', {
-            title: 'Users',
-            users: found
+          title: 'Users',
+          users: found
         });
       };
     } else {
