@@ -7,6 +7,6 @@
     , "mongodb": ">= 0.9.6-7"
     , "hbs": ">= 1.0.2"
     , "moment": ">= 1.6.0"
-    , "node-markdown": ">= 0.1.0"
+    , "github-flavored-markdown": ">= 1.0.1"
   }
 }

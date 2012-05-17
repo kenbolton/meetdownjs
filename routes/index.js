@@ -1,4 +1,4 @@
-var md = require('node-markdown').Markdown;
+var md = require("github-flavored-markdown");
 
 exports.index = function(req, res){
   req.app.settings.db.collection('events', function(error, events) {
@@ -8,7 +8,7 @@ exports.index = function(req, res){
         .sort({ starts_at: 1 })
         .toArray(function(error, found) {
           var next = found.shift();
-          next.description = next.description ? md(next.description) : undefined;
+          next.description = next.description ? md.parse(next.description) : undefined;
           res.render('index', {
             title: 'Meetdown.js',
             next: next,
