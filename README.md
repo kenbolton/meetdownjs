@@ -24,4 +24,4 @@ Add a record:
 
 Then open the a browser to <http://localhost:3000/user/>
 
-[tmux]: http://tmux.sourceforge.net/ "Many terminals, one screen"
+[tmux]: http://tmux.sourceforge.net/ "Many terminals, one window"
