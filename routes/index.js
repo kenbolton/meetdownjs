@@ -7,17 +7,28 @@ exports.index = function(req, res){
   res.render('index', { title: 'Meetdown.js' });
 };
 
-exports.user = {
+exports.users = {
   index: function (req, res) {
+    var format, callback;
+    format = req.params.format;
+    if (format === 'json') {
+      callback = function (error, found) {
+        res.send(found);
+      };
+    } else if (!format) {
+      callback = function (error, found) {
+        res.render('users', {
+            title: 'Users',
+            users: found
+        });
+      };
+    } else {
+      throw new Error("Unsupported format");
+    }
+
     req.app.settings.db.collection('users', function(error, users) {
       if (!error) {
-        users.find().toArray(function(error, found) {
-          if (req.params.format === 'json') {
-            res.send(found[0]);
-          } else {
-            res.render('user', found[0]);
-          }
-        });
+        users.find().toArray(callback);
       }
     });
   }
