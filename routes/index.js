@@ -12,7 +12,11 @@ exports.user = {
     req.app.settings.db.collection('users', function(error, users) {
       if (!error) {
         users.find().toArray(function(error, found) {
-          res.render('user', found[0]);
+          if (req.params.format === 'json') {
+            res.send(found[0]);
+          } else {
+            res.render('user', found[0]);
+          }
         });
       }
     });
