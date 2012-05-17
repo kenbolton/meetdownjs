@@ -4,7 +4,21 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Meetdown.js' });
+  req.app.settings.db.collection('events', function(error, events) {
+    if (!error) {
+      events
+        .find({ starts_at: { $gt: new Date() }})
+        .sort({ starts_at: 1 })
+        .toArray(function(error, found) {
+            var next = found.shift();
+            res.render('index', {
+              title: 'Meetdown.js',
+              next: next,
+              upcoming: found
+            });
+          });
+    }
+  });
 };
 
 exports.users = {

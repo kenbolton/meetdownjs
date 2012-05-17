@@ -1,2 +1,23 @@
 <h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<article>
+  {{#with next}}
+  <header>
+    <hgroup>
+      <h2>Next up: {{title}}</h2>
+      <h3>{{date "dddd, MMM Do, \at h:mma" starts_at}}</h3>
+      <h4>@ <a href="{{location.url}}">{{location.name}}</a></h4>
+    </hgroup>
+  </header>
+  <div>{{description}}</div>
+  {{/with}}
+</article>
+<section>
+  <header>
+    <h2>Upcoming</h2>
+  </header>
+  <ul>
+  {{#each upcoming}}
+    <li><a href="#{{date "YYYYMMDD" starts_at}}">{{title}}</a> {{date "M/D" starts_at}}</li>
+  {{/each}}
+  </ul>
+</section>
