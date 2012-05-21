@@ -9,6 +9,11 @@
     </hgroup>
   </header>
   <div>{{{description}}}</div>
+  <aside>
+    <h3>Coming?</h3>
+    <input type="radio" name="rsvp" value="true"><label>Yes</label>
+    <input type="radio" name="rsvp" value="false"><label>No</label>
+  </aside>
   {{/with}}
 </article>
 {{#if upcoming.length}}
@@ -23,3 +28,16 @@
   </ul>
 </section>
 {{/if}}
+<script>
+  (function () {
+    var data = {
+      starts_at: '{{date "YYYYMMDD HH:mm" next.starts_at}}'
+    };
+    $('input[name="rsvp"]').click(function () {
+      data.rsvp = $(this).val();
+      $.post('/my/events', data).done(function () {
+        $('aside').html('Thanks for letting us know!');
+      });
+    });
+  }());
+</script>

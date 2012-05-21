@@ -7,7 +7,9 @@ var express = require('express')
   , mongo = require('mongodb')
   , hbs = require('hbs')
   , moment = require('moment')
-  , routes = require('./routes');
+  , routes = require('./routes')
+  , users = require('./routes/users')
+  , events = require('./routes/events');
 
 var app = module.exports = express.createServer();
 
@@ -42,8 +44,19 @@ hbs.registerHelper('date', function (format, date) {
 
 // Routes
 
-app.get('/', routes.index);
-app.get('/users.:format?', routes.users.index);
+app.get('/',
+  events.collect,
+  events.listUpcoming,
+  events.markup,
+  routes.index
+);
+app.post('/my/events',
+  users.collect,
+  users.findOne,
+  events.collect,
+  events.findOne,
+  events.update
+);
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
