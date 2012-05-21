@@ -57,8 +57,7 @@ app.post('/login',
 );
 app.post('/my/events',
   users.findOne,
-  events.collect,
-  events.findOne,
+  events.retrieve,
   events.update
 );
 app.get('/events/create',

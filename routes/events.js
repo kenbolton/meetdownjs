@@ -47,6 +47,15 @@ exports.markup = function (req, res, next) {
 };
 
 /*
+ * Bundles
+ */
+
+exports.retrieve = [
+  exports.collect,
+  exports.findOne
+];
+
+/*
  * Endware
  */
 
