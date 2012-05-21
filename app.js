@@ -61,6 +61,14 @@ app.post('/my/events',
   events.findOne,
   events.update
 );
+app.get('/events/create',
+  events.create
+);
+app.post('/events',
+  events.dateify,
+  events.collect,
+  events.save
+);
 
 app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
