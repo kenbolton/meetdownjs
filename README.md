@@ -16,11 +16,18 @@ Open the Mongo shell (in YAT; tmuxinator?):
 
     $ mongo
 
-Add a record:
+Add a user record:
 
     > ken = {name: 'ken bolton', created_at: new Date()}
     { "name" : "ken bolton", "created_at" : ISODate("2012-05-16T23:28:23.670Z") }
     > db.users.save(ken)
+
+Add a couple of events:
+
+    > event1 = {title: 'Ken\'s Birthday', start_at: new Date(2012, 7, 27), description: 'He will be even older'}
+    > event2 = {title: 'Pi Day', start_at: new Date(2013, 3, 14), description: 'Everyone loves Pi'}
+    > db.events.save(event1)
+    > db.events.save(event2)
 
 Then open the a browser to <http://localhost:3000/user/>
 
