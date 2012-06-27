@@ -12,7 +12,7 @@ exports.collect = function (req, res, next) {
   });
 };
 
-exports.findOne = function (req, res, next) {
+exports.get = function (req, res, next) {
   req.events.findOne(req.body, function (error, event) {
     if (error) { return new Error(error); }
     req.event = event;
@@ -20,7 +20,12 @@ exports.findOne = function (req, res, next) {
   });
 };
 
-exports.listUpcoming = function (req, res, next) {
+exports.uncollect = function (req, res, next) {
+  req.events = undefined;
+  next();
+};
+
+exports.findUpcoming = function (req, res, next) {
   req.events
     .find({ starts_at: { $gt: new Date() }})
     .sort({ starts_at: 1 })
@@ -50,9 +55,16 @@ exports.markup = function (req, res, next) {
  * Bundles
  */
 
-exports.retrieve = [
+exports.listUpcoming = [
   exports.collect,
-  exports.findOne
+  exports.findUpcoming,
+  exports.markup,
+  exports.uncollect
+];
+
+exports.findOne = [
+  exports.collect,
+  exports.get
 ];
 
 /*
