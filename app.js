@@ -53,7 +53,7 @@ app.get('/',
   routes.index
 );
 app.post('/login',
-    users.authenticate
+  users.authenticate
 );
 app.post('/my/events',
   users.findOne,
