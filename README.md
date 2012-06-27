@@ -24,8 +24,8 @@ Add a user record:
 
 Add a couple of events:
 
-    > event1 = {title: 'Ken\'s Birthday', starts_at: new Date(2012, 7, 27), description: 'He will be even older'}
-    > event2 = {title: 'Pi Day', starts_at: new Date(2013, 3, 14), description: 'Everyone loves Pi'}
+    > event1 = {title: "Ken's Birthday", starts_at: new Date(2012, 6, 27), description: 'He will be even older'}
+    > event2 = {title: 'Pi Day', starts_at: new Date(2013, 2, 14), description: 'Everyone loves Pi'}
     > db.events.save(event1)
     > db.events.save(event2)
 
