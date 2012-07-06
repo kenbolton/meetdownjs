@@ -61,6 +61,9 @@ app.post('/my/events',
 app.get('/events/create',
   events.create
 );
+app.get('/events',
+  events.list
+);
 app.post('/events',
   events.dateify,
   events.collect,

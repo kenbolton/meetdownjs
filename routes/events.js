@@ -67,6 +67,12 @@ exports.findOne = [
   exports.get
 ];
 
+exports.list = [
+  events.collect,
+  events.markup,
+  events.index
+];
+
 /*
  * Endware
  */
@@ -86,5 +92,14 @@ exports.update = function (req, res) {
   req.events.findAndModify(req.event, [], { $set: req.body }, {}, function (error, event) {
     if (error) { throw new Error(error); }
     else { res.send(event); }
+  });
+};
+
+exports.index = function (req, res) {
+  req.events.find().toArray(function (error, found) {
+    res.render('events', {
+        title: 'Events',
+        events: found
+    });
   });
 };
