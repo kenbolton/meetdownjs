@@ -68,9 +68,9 @@ exports.findOne = [
 ];
 
 exports.list = [
-  events.collect,
-  events.markup,
-  events.index
+  exports.collect,
+  exports.markup,
+  exports.index
 ];
 
 /*
