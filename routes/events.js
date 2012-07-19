@@ -25,6 +25,17 @@ exports.uncollect = function (req, res, next) {
   next();
 };
 
+exports.findAll = function(req, res, next) {
+  req.events
+   .find()
+   .sort({ starts_at: 1 })
+   .toArray(function (error, found) {
+      if (error) { return new Error(error); }
+      req.found = found;
+      next();
+    });
+};
+
 exports.findUpcoming = function (req, res, next) {
   req.events
     .find({ starts_at: { $gt: new Date() }})
@@ -52,28 +63,6 @@ exports.markup = function (req, res, next) {
 };
 
 /*
- * Bundles
- */
-
-exports.listUpcoming = [
-  exports.collect,
-  exports.findUpcoming,
-  exports.markup,
-  exports.uncollect
-];
-
-exports.findOne = [
-  exports.collect,
-  exports.get
-];
-
-exports.list = [
-  exports.collect,
-  exports.markup,
-  exports.index
-];
-
-/*
  * Endware
  */
 
@@ -96,10 +85,31 @@ exports.update = function (req, res) {
 };
 
 exports.index = function (req, res) {
-  req.events.find().toArray(function (error, found) {
-    res.render('events', {
-        title: 'Events',
-        events: found
-    });
+  res.render('events', {
+    title: 'Events',
+    events: req.found
   });
 };
+
+/*
+ * Bundles
+ */
+
+exports.listUpcoming = [
+  exports.collect,
+  exports.findUpcoming,
+  exports.markup,
+  exports.uncollect
+];
+
+exports.findOne = [
+  exports.collect,
+  exports.get
+];
+
+exports.list = [
+  exports.collect,
+  exports.findAll,
+  exports.markup,
+  exports.index
+];
