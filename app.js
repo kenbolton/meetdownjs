@@ -70,9 +70,6 @@ app.all('/auth/github/callback',
     console.log("Got here");
   }
 );
-app.post('/login',
-  users.authenticate
-);
 app.post('/my/events',
   users.findOne,
   events.findOne,
