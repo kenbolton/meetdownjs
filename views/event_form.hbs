@@ -1,4 +1,4 @@
-<h1>Create Event</h1>
+<h1>{{#if _id}}Edit{{else}}Create{{/if}} Event</h1>
 <form method="post" action="/events">
   <input type="text" id="title" name="title" placeholder="Title">
   <input type="datetime" id="starts_at" name="starts_at" placeholder="Month/Day/Year Hour:Min">
