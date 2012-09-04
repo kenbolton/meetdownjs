@@ -3,13 +3,40 @@
 <head>
   <title>{{title}}</title>
   <link rel='stylesheet' href='/stylesheets/style.css'>
+  <link rel='stylesheet' href='/stylesheets/bootstrap.css'>
   <script src="/javascript/jquery.min.js"></script>
+  <script src="/javascript/bootstrap.min.js"></script>
 </head>
 <body>
-
-<a href="/auth/github">Login Using Github</a>
-
-{{{body}}}
-
+   <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Meet-Down</a>
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="/events">Events</a></li>
+            </ul>
+            <ul class="nav pull-right">
+              <li>
+                <a href="/auth/github">
+                  <b class="icon-user icon-white"></b> Sign in
+                </a>
+              </li>
+            </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container"> 
+        {{{body}}}
+        <hr>
+        <footer>
+            <p>2012 Meet-Down</p>
+        </footer>
+    </div>
 </body>
 </html>
