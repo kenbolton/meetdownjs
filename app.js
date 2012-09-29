@@ -1,3 +1,4 @@
+/*jshint laxcomma:true, es5:true*/
 /**
  * Module dependencies.
  */
@@ -18,7 +19,7 @@ everyauth.github
   .appId(settings.GITHUB_OAUTH2_ID)
   .appSecret(settings.GITHUB_OAUTH2_SECRET)
   .findOrCreateUser( function (session, accessToken, accessTokenExtra, githubUserMetadata) {
-    console.log("Meetdown/Github Login Handshake OAUTH Handshake performed")
+    console.log("Meetdown/Github Login Handshake OAUTH Handshake performed");
     // Need to check DB for user by GitHubID.  If doesn't not exist, add.
     return {};
   }).redirectPath('/');
