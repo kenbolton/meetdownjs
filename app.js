@@ -10,24 +10,25 @@ var express = require('express')
   , routes = require('./routes')
   , users = require('./routes/users')
   , events = require('./routes/events')
-  , everyauth = require('everyauth')
-  , settings = require('./settings_testing');
-
-
-// OAuth
-everyauth.github
-  .appId(settings.GITHUB_OAUTH2_ID)
-  .appSecret(settings.GITHUB_OAUTH2_SECRET)
-  .findOrCreateUser( function (session, accessToken, accessTokenExtra, githubUserMetadata) {
-    console.log("Meetdown/Github Login Handshake OAUTH Handshake performed");
-    // Need to check DB for user by GitHubID.  If doesn't not exist, add.
-    return {};
-  }).redirectPath('/');
-
-everyauth.debug = true;
-
+  , auth = require('./lib/auth');
 
 var app = module.exports = express.createServer();
+
+app.configure(function() {
+  var db = mongo.Db('test', mongo.Server('localhost', 27017, {}), {});
+  db.open(function() {});
+  app.set('db', db);
+});
+
+app.configure('development', function() {
+  app.use(auth.configuration(__dirname + '/settings_testing', {
+    debug: true,
+    saveUser: function(githubUserMetadata) {
+      // TODO: save to database???
+      console.log(githubUserMetadata.email);
+    }
+  }));
+});
 
 // Configuration
 app.configure(function(){
@@ -37,7 +38,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser());
   app.use(express.session({ secret: "SUPERSECRETKEY" }));
-  app.use(everyauth.middleware());
+  app.use(auth.middleware());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
@@ -50,12 +51,6 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-app.configure(function() {
-  var db = mongo.Db('test', mongo.Server('localhost', 27017, {}), {});
-  db.open(function() {});
-  app.set('db', db);
-});
-
 hbs.registerHelper('date', function (format, date) {
   return date ? moment(date).format(format) : '';
 });
@@ -63,6 +58,10 @@ hbs.registerHelper('date', function (format, date) {
 // Routes
 
 app.get('/',
+  function (req, res, next) {
+    console.log(req.session);
+    next();
+  },
   events.listUpcoming,
   routes.index
 );
