@@ -59,17 +59,8 @@ hbs.registerHelper('date', function (format, date) {
 // Routes
 
 app.get('/',
-  function (req, res, next) {
-    console.log(req.session);
-    next();
-  },
   events.listUpcoming,
   routes.index
-);
-app.all('/auth/github/callback',
-  function (request, response) {
-    console.log("Got here");
-  }
 );
 app.post('/my/events',
   users.findOne,
