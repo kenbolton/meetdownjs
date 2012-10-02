@@ -1,4 +1,4 @@
-/*jshint laxcomma:true, es5:true*/
+/*jshint laxcomma:true */
 /**
  * Module dependencies.
  */
@@ -14,16 +14,16 @@ var express = require('express')
 
 var app = module.exports = express.createServer();
 
-app.configure(function() {
+app.configure(function () {
   var db = mongo.Db('test', mongo.Server('localhost', 27017, {}), {});
-  db.open(function() {});
+  db.open(function () {});
   app.set('db', db);
 });
 
-app.configure('development', function() {
+app.configure('development', function () {
   app.use(auth.configuration(__dirname + '/settings_testing', {
     debug: true,
-    saveUser: function(githubUserMetadata) {
+    saveUser: function (githubUserMetadata) {
       // TODO: save to database???
       console.log(githubUserMetadata.email);
     }
@@ -31,7 +31,7 @@ app.configure('development', function() {
 });
 
 // Configuration
-app.configure(function(){
+app.configure(function () {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'hbs');
   app.use(express.bodyParser());
@@ -43,11 +43,11 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
 });
 
-app.configure('development', function(){
+app.configure('development', function () {
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
-app.configure('production', function(){
+app.configure('production', function () {
   app.use(express.errorHandler());
 });
 
@@ -87,6 +87,6 @@ app.post('/events',
   events.save
 );
 
-app.listen(3000, function(){
+app.listen(3000, function () {
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
